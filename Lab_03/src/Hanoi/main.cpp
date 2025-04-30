@@ -1,21 +1,37 @@
 #include <iostream>
+#include <string>
+#include <list>
+
 using namespace std;
 
-void hanoi(int n, int start_pos, int finish_pos) {
-    if (n == 0){
-        return;
+void printList(const list<string>& lst) {
+    for (const string& item : lst) {
+        cout << item << endl;
     }
-    int free_pos = 6 - start_pos - finish_pos;
-    hanoi(n - 1, start_pos, free_pos);
-    cout << "ring " << n << " from " << start_pos << " to " << finish_pos << endl;
-    hanoi(n - 1, free_pos, finish_pos);
+    cout << endl;
 }
 
-int main(){
-    int n;
-    cin >> n;
-    hanoi(n, 1, 3);
+void towerOfHanoi(int n, int from, int to, list<string>& moves) {
+
+    if (n == 0) return;
+
+    towerOfHanoi(n - 1, from, 6 - from - to, moves);
+
+    moves.push_back("Disk " + to_string(n) + " from pin " + to_string(from) + " to pin " + to_string(to));
+
+    towerOfHanoi(n - 1, 6 - from - to, to, moves);
+}
+
+
+int main() {
+    int disks = 4  ;
+    list<string> moves;
+
+    towerOfHanoi(disks, 1, 3, moves);
+
+    cout << "Solve Hanoi_Tower for " << disks << " disks:" << endl;
+    printList(moves);
+
+    moves.clear();
     return 0;
 }
-
-
