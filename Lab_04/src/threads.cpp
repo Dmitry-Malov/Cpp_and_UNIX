@@ -53,10 +53,8 @@ void benchmark(int iterations) {
 
     cout << fixed << setprecision(7);
 
-    // Общее время начала выполнения
     auto total_start = high_resolution_clock::now();
 
-    // Этап 1: Параллельное вычисление формул 1 и 2
     auto stage1_start = high_resolution_clock::now();
     {
         vector<thread> workers;
@@ -79,7 +77,6 @@ void benchmark(int iterations) {
     }
     auto stage1_end = high_resolution_clock::now();
 
-    // Этап 2: Параллельное вычисление формулы 3
     double stage2_time = 0;
     auto stage2_start = high_resolution_clock::now();
     {
@@ -103,12 +100,10 @@ void benchmark(int iterations) {
     }
     auto stage2_end = high_resolution_clock::now();
 
-    // Расчет временных показателей
     double total_elapsed = duration_cast<microseconds>(stage2_end - total_start).count() / 1e6;
     double stage1_elapsed = duration_cast<microseconds>(stage1_end - stage1_start).count() / 1e6;
     double stage2_elapsed = duration_cast<microseconds>(stage2_end - stage2_start).count() / 1e6;
 
-    // Вывод результатов
     lock_guard<mutex> lock(cout_mutex);
     cout << "=== Iterations: " << iterations << " ===" << endl;
     cout << "Threads used: " << num_threads << endl;
