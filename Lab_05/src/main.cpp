@@ -10,14 +10,14 @@
 
 std::mutex cout_mutex;
 
-//базовый класс
+//basic class
 class Command {
 public:
     virtual void execute() = 0;
     virtual ~Command() = default;
 };
 
-//вывод в консоль
+//console output
 class PrintCommand : public Command {
     std::string message;
 public:
@@ -28,7 +28,7 @@ public:
     }
 };
 
-//вывод в файл
+//file output
 class FileAppendCommand : public Command {
     std::string filename;
     std::string content;
@@ -43,7 +43,7 @@ public:
     }
 };
 
-//арифметические операции
+//arithmetic operations
 class MathCommand : public Command {
     double a, b;
     char op;
@@ -63,7 +63,7 @@ public:
     }
 };
 
-//цикл
+//loops
 class LoopCommand : public Command {
     int iterations;
     std::vector<std::unique_ptr<Command>> commands;
@@ -81,7 +81,7 @@ public:
     }
 };
 
-// Парсинг строки в команды
+// parsing string into commands
 std::unique_ptr<Command> parseCommand(const std::string& line) {
     std::istringstream iss(line);
     std::string token;
